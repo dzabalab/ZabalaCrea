@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZabalaCrea — Ideas con color, diseño con intención</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#1B1B1A;
+    --crema:#EDEAE2;
+    --coral:#F2764E;
+    --turquesa:#2FB1A3;
+    --magenta:#E8608A;
+    --lavanda:#9C8FDB;
+    --crema-soft:#F5F3EC;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--crema);
+    color:var(--tinta);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--coral);color:var(--crema);}
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Splash signature (SVG filter based watercolor blob) ---------- */
+  .splash{
+    position:absolute;
+    pointer-events:none;
+    z-index:0;
+    filter:url(#paintTexture);
+    mix-blend-mode:multiply;
+  }
+  .splash svg{display:block;width:100%;height:100%;}
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(237,234,226,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(27,27,26,0.08);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:78px;
+  }
+  .logo{
+    display:flex;
+    align-items:baseline;
+    font-size:1.5rem;
+    letter-spacing:-0.01em;
+  }
+  .logo .z{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.05em;
+  }
+  .logo .c{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-weight:800;
+    margin-left:1px;
+  }
+  .logo .dot{color:var(--coral);}
+
+  .nav-links{
+    display:flex;
+    gap:2.4rem;
+    font-size:0.94rem;
+    font-weight:600;
+  }
+  .nav-links a{
+    position:relative;
+    opacity:0.82;
+    transition:opacity .2s;
+  }
+  .nav-links a:hover{opacity:1;}
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; right:0; bottom:-6px;
+    height:2px;
+    background:var(--coral);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .nav-links a:hover::after{transform:scaleX(1);}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+    font-size:0.92rem;
+    padding:0.8rem 1.5rem;
+    border-radius:100px;
+    border:1.5px solid var(--tinta);
+    background:transparent;
+    color:var(--tinta);
+    cursor:pointer;
+    transition:transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{
+    transform:translateY(-2px);
+  }
+  .btn-primary{
+    background:var(--tinta);
+    color:var(--crema);
+    border-color:var(--tinta);
+  }
+  .btn-primary:hover{
+    box-shadow:6px 6px 0 var(--coral);
+  }
+  .btn-outline:hover{
+    background:var(--tinta);
+    color:var(--crema);
+  }
+  .nav-cta{display:none;}
+  @media(min-width:860px){.nav-cta{display:inline-flex;}}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:6.5rem 0 6rem;
+    overflow:hidden;
+  }
+  .hero-splash{
+    top:-14%;
+    right:-10%;
+    width:640px;
+    height:640px;
+    opacity:0.9;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:0.8rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--tinta);
+    background:rgba(255,255,255,0.55);
+    border:1px solid rgba(27,27,26,0.12);
+    padding:0.5rem 1rem;
+    border-radius:100px;
+    margin-bottom:2rem;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow .dotpulse{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--turquesa);
+  }
+  .hero h1{
+    position:relative;
+    z-index:2;
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    line-height:1.04;
+    font-size:clamp(2.6rem, 6.4vw, 5.2rem);
+    max-width:820px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    background:linear-gradient(92deg,var(--coral) 0%, var(--magenta) 55%, var(--lavanda) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.lead{
+    position:relative;
+    z-index:2;
+    margin-top:1.8rem;
+    font-size:1.18rem;
+    line-height:1.6;
+    max-width:520px;
+    color:rgba(27,27,26,0.78);
+  }
+  .hero-actions{
+    position:relative;
+    z-index:2;
+    display:flex;
+    gap:1rem;
+    margin-top:2.6rem;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- Marquee strip ---------- */
+  .strip{
+    border-top:1.5px solid var(--tinta);
+    border-bottom:1.5px solid var(--tinta);
+    background:var(--tinta);
+    color:var(--crema);
+    padding:0.9rem 0;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .strip-track{
+    display:inline-flex;
+    gap:2.5rem;
+    animation:scroll 26s linear infinite;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.1rem;
+  }
+  .strip-track span{opacity:0.9;}
+  .strip-track .sep{color:var(--coral);opacity:1;}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* ---------- Servicios ---------- */
+  .section{
+    position:relative;
+    padding:6.5rem 0;
+  }
+  .section-head{
+    max-width:640px;
+    margin-bottom:3.5rem;
+  }
+  .section-tag{
+    font-size:0.8rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--magenta);
+    margin-bottom:1rem;
+    display:block;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    line-height:1.15;
+  }
+  .section-head h2 .accent{
+    font-style:italic;
+    font-weight:500;
+  }
+
+  .services{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.5rem;
+  }
+  @media(max-width:900px){.services{grid-template-columns:1fr;}}
+
+  .card{
+    position:relative;
+    background:var(--crema-soft);
+    border:1.5px solid rgba(27,27,26,0.1);
+    border-radius:22px;
+    padding:2.4rem 2rem 2.2rem;
+    overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(27,27,26,0.22);
+  }
+  .card .icon-badge{
+    width:56px;height:56px;
+    border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.5rem;
+    margin-bottom:1.6rem;
+  }
+  .card:nth-child(1) .icon-badge{background:rgba(242,118,78,0.16);}
+  .card:nth-child(2) .icon-badge{background:rgba(47,177,163,0.16);}
+  .card:nth-child(3) .icon-badge{background:rgba(232,96,138,0.16);}
+  .card h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.35rem;
+    margin-bottom:0.7rem;
+  }
+  .card p{
+    font-size:0.98rem;
+    line-height:1.55;
+    color:rgba(27,27,26,0.72);
+  }
+  .card .num{
+    position:absolute;
+    top:1.6rem; right:1.8rem;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:0.9rem;
+    color:rgba(27,27,26,0.28);
+  }
+
+  /* ---------- Proceso ---------- */
+  .process-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .process-item{
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:2rem;
+    padding:2rem 0;
+    border-top:1.5px solid rgba(27,27,26,0.14);
+    align-items:start;
+  }
+  .process-item:last-child{border-bottom:1.5px solid rgba(27,27,26,0.14);}
+  .process-step{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:2.2rem;
+    color:rgba(27,27,26,0.22);
+  }
+  .process-item h4{
+    font-size:1.1rem;
+    font-weight:700;
+    margin-bottom:0.5rem;
+  }
+  .process-item p{
+    color:rgba(27,27,26,0.7);
+    font-size:0.98rem;
+    max-width:480px;
+    line-height:1.55;
+  }
+  .process-item .tagcolor{
+    display:inline-block;
+    width:10px;height:10px;
+    border-radius:50%;
+    margin-right:8px;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-section{
+    position:relative;
+    background:var(--tinta);
+    color:var(--crema);
+    border-radius:32px;
+    margin:0 auto;
+    max-width:1180px;
+    padding:5rem 3rem;
+    overflow:hidden;
+    text-align:center;
+  }
+  .cta-splash{
+    width:520px;height:520px;
+    top:-30%;
+    left:50%;
+    transform:translateX(-50%);
+    opacity:0.55;
+    mix-blend-mode:screen;
+  }
+  .cta-section h2{
+    position:relative;z-index:2;
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:clamp(2rem,4.6vw,3.2rem);
+    max-width:640px;
+    margin:0 auto 1.3rem;
+    line-height:1.15;
+  }
+  .cta-section h2 em{font-style:italic;font-weight:500;color:var(--coral);}
+  .cta-section p{
+    position:relative;z-index:2;
+    color:rgba(237,234,226,0.75);
+    max-width:460px;
+    margin:0 auto 2.4rem;
+    font-size:1.05rem;
+  }
+  .cta-section .btn-primary{
+    position:relative;z-index:2;
+    background:var(--crema);
+    color:var(--tinta);
+    border-color:var(--crema);
+  }
+  .cta-section .btn-primary:hover{
+    box-shadow:6px 6px 0 var(--turquesa);
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:5rem 0 2.5rem;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:2.5rem;
+    padding-bottom:3rem;
+    border-bottom:1.5px solid rgba(27,27,26,0.14);
+  }
+  .footer-brand .logo{margin-bottom:1rem;}
+  .footer-brand p{
+    max-width:280px;
+    font-size:0.95rem;
+    color:rgba(27,27,26,0.68);
+    line-height:1.55;
+  }
+  .footer-cols{
+    display:flex;
+    gap:4rem;
+    flex-wrap:wrap;
+  }
+  .footer-col h5{
+    font-size:0.78rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    margin-bottom:1.1rem;
+    color:rgba(27,27,26,0.5);
+  }
+  .footer-col a{
+    display:block;
+    font-size:0.95rem;
+    font-weight:500;
+    margin-bottom:0.7rem;
+    opacity:0.85;
+  }
+  .footer-col a:hover{opacity:1;color:var(--coral);}
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:1.8rem;
+    font-size:0.85rem;
+    color:rgba(27,27,26,0.55);
+    flex-wrap:wrap;
+    gap:1rem;
+  }
+  .swatches{display:flex;gap:6px;}
+  .swatches span{width:14px;height:14px;border-radius:50%;display:inline-block;}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .hero{padding:4rem 0 4rem;}
+    .cta-section{padding:3.5rem 1.6rem;border-radius:24px;}
+    .section{padding:4.5rem 0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG filter used to give the splash blobs a watercolor edge -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="paintTexture">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="38" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo">
+      <span class="z">Zabala</span><span class="c">Crea<span class="dot">.</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="#contacto" class="btn btn-primary nav-cta">Empecemos ✦</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="splash hero-splash" aria-hidden="true">
+      <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="300" cy="230" r="150" fill="#F2764E" opacity="0.55"/>
+        <circle cx="420" cy="300" r="130" fill="#9C8FDB" opacity="0.5"/>
+        <circle cx="240" cy="360" r="140" fill="#2FB1A3" opacity="0.5"/>
+        <circle cx="380" cy="180" r="90" fill="#E8608A" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <span class="eyebrow"><span class="dotpulse"></span> Estudio creativo de diseño y contenido</span>
+
+    <h1>Ideas con color,<br><em>diseño con intención.</em></h1>
+
+    <p class="lead">Somos ZabalaCrea: convertimos tu marca en algo que se reconoce a primera vista. Color con propósito, palabras que se quedan y diseño que trabaja para tu negocio.</p>
+
+    <div class="hero-actions">
+      <a href="#contacto" class="btn btn-primary">Cuéntame tu proyecto ✦</a>
+      <a href="#servicios" class="btn btn-outline">Ver servicios</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="strip">
+    <div class="strip-track">
+      <span>Diseño con color y estilo</span><span class="sep">✦</span>
+      <span>Plantillas</span><span class="sep">✦</span>
+      <span>Frases con estilo</span><span class="sep">✦</span>
+      <span>Contenido</span><span class="sep">✦</span>
+      <span>Tu marca, al siguiente nivel</span><span class="sep">✦</span>
+      <span>Diseño con color y estilo</span><span class="sep">✦</span>
+      <span>Plantillas</span><span class="sep">✦</span>
+      <span>Frases con estilo</span><span class="sep">✦</span>
+      <span>Contenido</span><span class="sep">✦</span>
+      <span>Tu marca, al siguiente nivel</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+  <!-- SERVICIOS -->
+  <section class="section wrap" id="servicios">
+    <div class="section-head">
+      <span class="section-tag">Qué hacemos</span>
+      <h2>Todo lo que tu marca necesita para <span class="accent">verse y sonar</span> como tú la imaginas.</h2>
+    </div>
+
+    <div class="services">
+      <div class="card">
+        <span class="num">01</span>
+        <div class="icon-badge">🎨</div>
+        <h3>Diseño con color y estilo</h3>
+        <p>Identidad visual, paletas y piezas gráficas pensadas para que tu marca destaque desde el primer vistazo.</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <div class="icon-badge">💻</div>
+        <h3>Plantillas, frases y contenido</h3>
+        <p>Plantillas listas para usar, frases con personalidad y contenido que suena a ti, no a genérico.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <div class="icon-badge">🚀</div>
+        <h3>Tu negocio, al siguiente nivel</h3>
+        <p>Estrategia creativa aplicada: diseño y contenido que acompañan el crecimiento real de tu negocio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="section wrap" id="proceso">
+    <div class="section-head">
+      <span class="section-tag">Cómo trabajamos</span>
+      <h2>Un proceso simple, <span class="accent">pensado para avanzar rápido.</span></h2>
+    </div>
+
+    <div class="process-list">
+      <div class="process-item">
+        <span class="process-step">01</span>
+        <div>
+          <h4><span class="tagcolor" style="background:var(--coral)"></span>Conversamos</h4>
+          <p>Escuchamos tu marca, tu negocio y lo que quieres transmitir. Sin plantillas mentales, cada proyecto parte de cero.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-step">02</span>
+        <div>
+          <h4><span class="tagcolor" style="background:var(--turquesa)"></span>Creamos</h4>
+          <p>Diseñamos color, tipografía, plantillas y mensajes que encajan con tu identidad y tu forma de trabajar.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-step">03</span>
+        <div>
+          <h4><span class="tagcolor" style="background:var(--magenta)"></span>Entregamos</h4>
+          <p>Recibes tus piezas listas para usar, con guía clara de aplicación, para que las uses hoy mismo.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-step">04</span>
+        <div>
+          <h4><span class="tagcolor" style="background:var(--lavanda)"></span>Acompañamos</h4>
+          <p>Seguimos cerca para ajustar, ampliar y llevar tu marca al siguiente nivel cuando lo necesites.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wrap" style="padding:2rem 0 6.5rem;">
+    <div class="cta-section" id="contacto">
+      <div class="splash cta-splash" aria-hidden="true">
+        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="300" cy="230" r="150" fill="#F2764E" opacity="0.6"/>
+          <circle cx="420" cy="300" r="130" fill="#9C8FDB" opacity="0.55"/>
+          <circle cx="240" cy="360" r="140" fill="#2FB1A3" opacity="0.55"/>
+          <circle cx="380" cy="180" r="90" fill="#E8608A" opacity="0.55"/>
+        </svg>
+      </div>
+      <h2>Hablemos de <em>tu próxima idea</em> con color.</h2>
+      <p>Cuéntanos sobre tu marca y te mostramos cómo podemos llevarla al siguiente nivel.</p>
+      <a href="mailto:hola@zabalacrea.com" class="btn btn-primary">Escríbenos ✦ hola@zabalacrea.com</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#top" class="logo">
+        <span class="z">Zabala</span><span class="c">Crea<span class="dot">.</span></span>
+      </a>
+      <p>Ideas con color, diseño con intención. Estudio creativo de diseño y contenido para marcas con carácter.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Estudio</h5>
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <a href="mailto:hola@zabalacrea.com">hola@zabalacrea.com</a>
+        <a href="#">Instagram</a>
+        <a href="#">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ZabalaCrea. Todos los derechos reservados.</span>
+    <div class="swatches" aria-hidden="true">
+      <span style="background:#F2764E"></span>
+      <span style="background:#2FB1A3"></span>
+      <span style="background:#E8608A"></span>
+      <span style="background:#9C8FDB"></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+
